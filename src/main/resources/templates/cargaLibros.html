@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Carga de Libros</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+             <h2>Carga de libro</h2>
+            <form action="/libro/registro" method="Post">
+                
+               
+                <input type="number" name="isbn" placeholder="Ingrese isbn"><br>
+                 <input type="text" name="titulo" placeholder="Titulo del libro"><br>
+                  <input type="number" name="ejemplares" placeholder="Cantidad de ejemplares"><br>
+                  <select name="idAutor">
+                      <option>Seleccionar Autor</option>
+                      <option th:each="autor: ${autores}"
+                              th:value="${autor.id}"
+                              th:text="${autor.nombre}"/>
+                </select><br>
+                  <select name="idEditorial">
+                      <option>Seleccionar Editoriales</option>
+                       <option th:each="editorial: ${editoriales}"
+                              th:value="${editorial.id}"
+                              th:text="${editorial.nombre}"/>
+                </select><br>
+                <div th:if="${error != null}"><!-- comment -->
+                <p th:text="${error}"></p>
+                </div>
+                <div th:if="${exito != null}"><!-- comment -->
+                <p th:text="${exito}"></p>
+                </div>
+                 <button type="submit">Enviar</button>
+            </form>
+        
+        </div>
+    </body>
+</html>
