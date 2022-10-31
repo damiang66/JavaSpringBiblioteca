@@ -15,9 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
-    @GetMapping("/")
+    @GetMapping("/index.html")
     public String index(){
         return "index.html";
+    }
+    @GetMapping("/autor.html")
+    public String autor(){
+        return "autor.html";
+    }
+    @GetMapping("/editorial.html")
+    public String editorial(){
+        return "editorial.html";
+    }
+    @GetMapping("/libros.html")
+    public String libro(){
+        return "libros.html";
     }
   
 }

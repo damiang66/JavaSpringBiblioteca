@@ -34,7 +34,7 @@ AutorRepositorio autorRepositorio ;
         Autor autor = new Autor();
         
         autor.setNombre(nombre);
-        System.out.println("estoy en el servicio"+autor.getNombre());
+    //    System.out.println("estoy en el servicio"+autor.getNombre());
         
        autorRepositorio.save(autor);
         
