@@ -14,5 +14,9 @@ public class MiException extends Exception{
         super(msg);
     }
 
+    public MiException() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
   
 }

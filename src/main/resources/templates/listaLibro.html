@@ -3,41 +3,13 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace ="/fragmento/head :: head"></head>
+       
     
-    </head>
     <body>
         <div>
-              <nav class="navbar navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">Biblioteca</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="../autor.html">Autor</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="../editorial.html">Editorial</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../libros.html">Libros</a>
-                      </li>
-                  </ul>
-                  <span class="navbar-text">
-                    Navegacion de la biblioteca
-                  </span>
-                </div>
-              </nav>
+            <nav th:replace= "/fragmento/navbar :: nav"></nav>
              <table class="table">
   <thead>
     <tr>
@@ -47,7 +19,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
       <th scope="col">ejemplares</th>
       <th scope="col">autor</th>
       <th scope="col">Editorial</th>
-      <th scope="col">Accion</th>
+      <th scope="col" sec:authorize="hasRole('ADMIN')">Accion</th>
      
      
     </tr>
@@ -61,7 +33,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
       <td th:text="${libro.autor.nombre}"></td><!-- comment -->
        <td th:text="${libro.editorial.nombre}"></td>
        <td>
-  <a href="url">Modificar</a>
+  <a sec:authorize="hasRole('ADMIN')" th:href="@{/libro/modificar/__${libro.isbn}__}">Modificar</a>
        </td>
     </tr>
     

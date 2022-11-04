@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/libro")
+ 
 public class LibroControlador {
     @Autowired
     private LibroServicio libroServicio;
@@ -36,7 +38,7 @@ public class LibroControlador {
     private EditorialServicio editorialServicio;
     @Autowired
     private AutorServicio autorServicio;
-    
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
      @GetMapping("/registrar")
      public String registrar(ModelMap modelo){
          List<Autor> autores= autorServicio.listarAutor();
@@ -46,6 +48,7 @@ public class LibroControlador {
          
          return "cargaLibros.html"; 
      }
+     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
      @PostMapping("/registro")
      public String registro(@RequestParam(required=false) Long isbn,@RequestParam String titulo
              ,@RequestParam(required = false) Integer ejemplares, 
@@ -71,12 +74,34 @@ public class LibroControlador {
          modelo.addAttribute("libros", libros);
          return "listaLibro.html";
      }
+     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping("/modificar/{isbn}")
-    public String modificar(@PathVariable Long id,ModelMap modelo){
-        modelo.put("libro", libroServicio.BuscarUnLibro(id));
-        System.out.println(modelo.toString());
+    public String modificar(@PathVariable Long isbn,ModelMap modelo){
+        modelo.put("libro", libroServicio.BuscarUnLibro(isbn));
+        //System.out.println(modelo.toString());
+          List<Autor> autores= autorServicio.listarAutor();
+         List<Editorial>editoriales=editorialServicio.listarEditorial();
+        modelo.addAttribute("autores", autores);
+        modelo.addAttribute("editoriales", editoriales);
         return "libroModificar.html";
         
     }
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PostMapping("/modificar/{isbn}")
+public String modificar(@PathVariable Long isbn,String titulo,String idAutor,String idEditorial,Integer ejemplares,ModelMap modelo){
+        try {
+            System.out.println(isbn+"-"+titulo+"-"+idAutor+"-"+idEditorial+"-"+ejemplares);
+            List<Autor> autores= autorServicio.listarAutor();
+         List<Editorial>editoriales=editorialServicio.listarEditorial();
+        modelo.addAttribute("autores", autores);
+        modelo.addAttribute("editoriales", editoriales);
+            libroServicio.modificarLibro(isbn, titulo, idAutor, idEditorial,ejemplares);
+            return "redirect:../lista";
+        } catch (MiException ex) {
+           // Logger.getLogger(AutorControlador.class.getName()).log(Level.SEVERE, null, ex);
+           modelo.put("error", ex.getMessage());
+           return "libroModificar.html";
+        }
+}
     
 }

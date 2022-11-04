@@ -4,6 +4,7 @@
  */
 package com.biblioteca.bibliotecaEjemplo.servicio;
 
+
 import com.biblioteca.bibliotecaEjemplo.entidades.Editorial;
 import com.biblioteca.bibliotecaEjemplo.excepciones.MiException;
 import com.biblioteca.bibliotecaEjemplo.repositorio.EditorialRepositorio;
@@ -34,7 +35,8 @@ public class EditorialServicio {
         editoriales = editorialRepositorio.findAll();
         return editoriales;
     }
-      public void modificarEditorial(String nombre,String id){
+      public void modificarEditorial(String id,String nombre) throws MiException{
+          validar(nombre);
           Optional<Editorial> respuesta = editorialRepositorio.findById(id);
           if(respuesta.isPresent()){
               Editorial editorial = respuesta.get();
@@ -42,6 +44,10 @@ public class EditorialServicio {
               editorialRepositorio.save(editorial);
           }
           
+      }
+      public Editorial MostrarUnSoloAutor(String id){
+          Editorial editorial=editorialRepositorio.getOne(id);
+          return editorial;
       }
       public void validar(String nombre) throws MiException{
           if(nombre.isEmpty()|| nombre==null){
