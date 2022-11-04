@@ -13,7 +13,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <nav th:replace= "/fragmento/navbar :: nav"></nav>
               
             <h1>Biblioteca</h1>
-            <a href="libro/lista" class="btn btn-primary">Lista de Libros</a><br>
+            <a href="libro/lista" class="btn btn-primary" >Lista de Libros</a><br>
+            <p th:text="'Error'+${codigo}"></p>
+            <p th:text="${mensaje}"></p>
             <p th:if="${session.usuariosession!=null}" th:text="'Bienvenido '+${session.usuariosession.nombre} "></p>
             <a>
                 <img   class="img"width="150px" height="150px" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">

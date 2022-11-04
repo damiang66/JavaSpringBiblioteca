@@ -17,6 +17,8 @@
                     <li class="nav-item">
                         <a class="nav-link"th:if="${session.usuariosession!=null}" href="/libros.html">Libros</a>
                       </li>
+                       <a class="nav-link"th:if="${session.usuariosession!=null}" th:href="@{/perfil}">Perfil</a>
+                      </li>
                       <li class="nav-item">
                         <a class="nav-link"th:if="${session.usuariosession!=null}" href="/logout">Cerrar </a>
                       </li>
